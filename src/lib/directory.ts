@@ -20,7 +20,8 @@ export function buildDirectoryPage(siteUrl: string) {
       label: 'Répertoire indépendant des mangroves de Guadeloupe',
       title: 'Découvrez les plus belles mangroves de Guadeloupe',
       lead: 'On répertorie les mangroves de l\'archipel, à pied, en kayak ou en bateau, et on vous y emmène sur les plus belles.',
-      image: { src: 'https://www.bluelagoon-gp.com/wp-content/uploads/sites/7196/2024/04/paletuvier-enfant.jpg', alt: '', caption: 'Palétuvier', credit: 'Blue Lagoon' },
+      // Openly licensed (Wikimedia Commons): partner photos can disappear (the Blue Lagoon ones did in Oct 2026, OL-15).
+      image: { src: 'https://commons.wikimedia.org/wiki/Special:FilePath/Mangrove%2C_Petit-Canal%2C_Grande-Terre%2C_Guadeloupe%2C_2010-03-28-.jpg?width=1600', alt: '', caption: 'Mangrove de Petit-Canal', credit: 'Wikimedia Commons' },
       // Ratings only where the operator has a real, sourced one (no invented ratings).
       guides: ops.map((o) => ({ href: linkIfBuilt(routes.guide(o.guideSlug)) || '#qui-sommes-nous', photo: o.photo, name: o.name, rating: o.rating ? o.rating.split(' · ')[0] : undefined })),
     },

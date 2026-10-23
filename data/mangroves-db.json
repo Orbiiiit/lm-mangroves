@@ -69,17 +69,6 @@
       ],
       "images": [
         {
-          "url": "https://www.bluelagoon-gp.com/wp-content/uploads/sites/7196/2024/04/bluelagoonhome-scaled.jpg",
-          "thumb": "https://www.bluelagoon-gp.com/wp-content/uploads/sites/7196/2024/04/bluelagoonhome-scaled.jpg",
-          "caption": "Lagon du Grand Cul-de-Sac Marin",
-          "credit": "Blue Lagoon",
-          "license": "Photo opérateur",
-          "rights": "opérateur partenaire",
-          "sourcePage": "https://www.bluelagoon-gp.com/",
-          "sourceName": "Blue Lagoon",
-          "relevance": "mangrove"
-        },
-        {
           "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Nyctanassa_violacea_in_a_mangrove_of_Guadeloupe%2C_2.jpg?width=1600",
           "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Nyctanassa_violacea_in_a_mangrove_of_Guadeloupe%2C_2.jpg?width=400",
           "caption": "Bihoreau violacé dans une mangrove de Guadeloupe",
@@ -187,17 +176,6 @@
           "sourcePage": "https://commons.wikimedia.org/wiki/File:La_Rivi%C3%A8re_Sal%C3%A9e_02.jpg",
           "sourceName": "Wikimedia Commons",
           "relevance": "mangrove"
-        },
-        {
-          "url": "https://www.bluelagoon-gp.com/wp-content/uploads/sites/7196/2024/04/paletuvier-enfant.jpg",
-          "thumb": "https://www.bluelagoon-gp.com/wp-content/uploads/sites/7196/2024/04/paletuvier-enfant.jpg",
-          "caption": "Palétuviers en bateau",
-          "credit": "Blue Lagoon",
-          "license": "Photo opérateur",
-          "rights": "opérateur partenaire",
-          "sourcePage": "https://www.bluelagoon-gp.com/",
-          "sourceName": "Blue Lagoon",
-          "relevance": "mangrove"
         }
       ],
       "blurb": "Le chenal bordé de mangrove qui sépare Basse-Terre et Grande-Terre.",
@@ -242,17 +220,7 @@
         }
       ],
       "images": [
-        {
-          "url": "https://www.bluelagoon-gp.com/wp-content/uploads/sites/7196/2024/04/bluelagoonhome-scaled.jpg",
-          "thumb": "https://www.bluelagoon-gp.com/wp-content/uploads/sites/7196/2024/04/bluelagoonhome-scaled.jpg",
-          "caption": "Lagon, sortie Blue Lagoon",
-          "credit": "Blue Lagoon",
-          "license": "Photo opérateur",
-          "rights": "opérateur partenaire",
-          "sourcePage": "https://www.bluelagoon-gp.com/",
-          "sourceName": "Blue Lagoon",
-          "relevance": "mangrove"
-        }
+        
       ],
       "blurb": "Étape classique des sorties bateau au départ de Sainte-Rose.",
       "paragraphs": [
@@ -297,17 +265,7 @@
       ],
       "internalNote": "Ajouter une source PNG officielle.",
       "images": [
-        {
-          "url": "https://www.bluelagoon-gp.com/wp-content/uploads/sites/7196/2024/04/paletuvier-enfant.jpg",
-          "thumb": "https://www.bluelagoon-gp.com/wp-content/uploads/sites/7196/2024/04/paletuvier-enfant.jpg",
-          "caption": "Palétuviers, sortie Blue Lagoon",
-          "credit": "Blue Lagoon",
-          "license": "Photo opérateur",
-          "rights": "opérateur partenaire",
-          "sourcePage": "https://www.bluelagoon-gp.com/",
-          "sourceName": "Blue Lagoon",
-          "relevance": "mangrove"
-        }
+        
       ],
       "blurb": "Le plus grand îlet du Grand Cul-de-Sac Marin, couvert de mangrove.",
       "paragraphs": [

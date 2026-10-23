@@ -15,6 +15,8 @@ interface Props {
   noindex?: boolean;
 }
 const { title, description, canonical, ogImage, jsonLd = [], shell, noindex = false } = Astro.props;
+// Pages without their own photo (and the home page) share our own image, so previews never depend on a partner's server.
+const shareImage = ogImage || new URL('/og-default.png', Astro.site).href;
 ---
 <!doctype html>
 <html lang="fr">
@@ -26,13 +28,15 @@ const { title, description, canonical, ogImage, jsonLd = [], shell, noindex = fa
     {noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonical} />}
     {!noindex && !INDEXABLE && <meta name="robots" content="noindex, nofollow" />}
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="fr_FR" />
     <meta property="og:site_name" content="Mangroves Gwada" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
-    {ogImage && <meta property="og:image" content={ogImage} />}
+    <meta property="og:image" content={shareImage} />
+    <meta name="twitter:card" content="summary_large_image" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,600;1,400&family=Work+Sans:wght@400;600&display=swap" />

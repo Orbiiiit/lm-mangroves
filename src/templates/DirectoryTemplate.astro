@@ -15,7 +15,7 @@ import type { ShellData } from '../lib/shell';
 interface Props { page: DirectoryPageModel; shell: ShellData }
 const { page, shell } = Astro.props;
 ---
-<PageShell title={page.title} description={page.description} canonical={page.canonical} ogImage={page.hero.image.src} jsonLd={page.jsonLd} shell={shell}>
+<PageShell title={page.title} description={page.description} canonical={page.canonical} jsonLd={page.jsonLd} shell={shell}>
   <div class="directory" data-directory>
     <Hero variant="directory" label={page.hero.label} title={page.hero.title} lead={page.hero.lead} slides={[page.hero.image]} guides={page.hero.guides} />
     <FilterBar filters={page.filters} />

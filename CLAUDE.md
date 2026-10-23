@@ -45,7 +45,7 @@ Sites live in `data/mangroves-db.json` (Airtable mirror in `airtable/`, rules in
 
 ## Decided
 - **Working mode:** all work continues in Claude Code from these docs.
-- **Stack (decided 7 Oct 2026):** Astro, static output (one HTML file per route, JavaScript only for small interactions). Hosting: Cloudflare Pages. Code in `src/` (see `README.md`).
+- **Stack (decided 7 Oct 2026):** Astro, static output (one HTML file per route, JavaScript only for small interactions). Hosting: Cloudflare Workers (static assets, `wrangler.jsonc`) on https://mangrove-guadeloupe.fr. Code in `src/` (see `README.md`).
 - **Data:** keep `data/mangroves-db.json` as is for now; Airtable comes later (tables in `airtable/`, articles live in `Articles`, `Article Sections`, `Article FAQ`).
 - **URLs:** articles `/idees/<slug>` (not linked to a guide), guide profiles `/guides/<slug>`, sites `/mangrove/<slug>`.
 - **Access framing (7 Oct 2026):** every mangrove is free to visit; some on foot, others need a boat or kayak (own or rented) or a guide, who brings real advantages. All copy follows this: "L’accès est gratuit", then how to reach it, the guide as an option (`howToReach` in `src/lib/format.ts`). Sites with no access mode in the data make no access claim.
@@ -67,6 +67,7 @@ Deferred work and pending decisions live in `OPEN_LOOPS.md` (one tracker; don't 
 - `.on-inverse` recolours every text style inside it: put it on the text block, never on a container holding white badges or chips.
 - The page's opening answer (meta description, JSON-LD `description`) must also be visible in the body, where an assistant can quote it.
 - Screenshots in the cloud sandbox: pass `HTTPS_PROXY` to Chromium; some image hosts stay blocked, which is not a site bug.
+- Partner-hosted URLs break without notice (Blue Lagoon's photos and tour page, Oct 2026): before a release, check booking links and images on the live site, and prefer openly licensed or self-hosted images.
 
 ## Style of work
 Be concise. Prefer small targeted changes; don't refactor unrelated code. State what you changed and any proposed additions at the end of your reply.

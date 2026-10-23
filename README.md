@@ -13,16 +13,13 @@ npm run build     # static HTML in dist/
 npm run check     # type check
 ```
 
-## Deploy (Cloudflare Pages)
+## Deploy (Cloudflare Workers)
 
-| Setting | Value |
-|---|---|
-| Framework preset | Astro |
-| Build command | `npm run build` |
-| Build output directory | `dist` |
-| Node version | 22 (from `.node-version`) |
+The Worker `mangroves` serves the static build at **https://mangrove-guadeloupe.fr** (custom domain attached in the Cloudflare dashboard). Workers Builds runs on every push: build command `npm run build`, deploy command `npx wrangler deploy` (config in `wrangler.jsonc`: assets from `dist`, our `404.html` for unknown URLs). Node 22 (`.node-version`).
 
-Pages are indexed by default. The site is built by Cloudflare Workers Builds and served at `https://mangroves.app-e5e.workers.dev`. Canonical URLs, the sitemap and JSON-LD use `SITE_URL`; on Workers Builds without it, that address is used (`astro.config.mjs`); a Cloudflare Pages build without it fails. When the domain arrives, set `SITE_URL` to it. To hide a deployment from crawlers, set `INDEXABLE=false` (pages get `noindex`, `robots.txt` disallows all).
+- **`SITE_URL`** (build variable, Settings → Build → Variables): the production origin used by canonical URLs, the sitemap, `robots.txt`, `llms.txt`, Open Graph and JSON-LD. Without it, Workers Builds fall back to `https://mangrove-guadeloupe.fr` (`astro.config.mjs`).
+- **`INDEXABLE=false`** hides a deployment from crawlers (pages get `noindex`, `robots.txt` disallows all). Pages are indexed by default.
+- **`public/_headers`**: security headers and cache rules for every response.
 
 ## Layout
 

@@ -1,0 +1,11 @@
+// Cloudflare Worker serving the static build (Workers Builds runs `npx astro build` then `npx wrangler deploy`).
+// The custom domain (mangrove-guadeloupe.fr) is attached in the dashboard; this file does not manage routes.
+{
+  "name": "mangroves",
+  "compatibility_date": "2026-10-01",
+  "assets": {
+    "directory": "./dist",
+    // Unknown URLs get our 404.html with a 404 status (without this they get an empty body).
+    "not_found_handling": "404-page"
+  }
+}

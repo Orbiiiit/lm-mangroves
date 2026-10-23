@@ -1,0 +1,16 @@
+# Security headers for every response (Cloudflare Workers static assets read this file).
+# No Content-Security-Policy yet: fonts and photos still come from third parties (OL-15); add one once they are self-hosted.
+/*
+  Strict-Transport-Security: max-age=31536000
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: DENY
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), interest-cohort=()
+
+# Icons and the share image rarely change: cache them for a week.
+/favicon.ico
+  Cache-Control: public, max-age=604800
+/apple-touch-icon.png
+  Cache-Control: public, max-age=604800
+/og-default.png
+  Cache-Control: public, max-age=604800
