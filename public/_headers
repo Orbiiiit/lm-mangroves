@@ -1,4 +1,12 @@
-# Security headers for every response (Cloudflare Workers static assets read this file).
+# Cloudflare Pages headers (https://developers.cloudflare.com/pages/configuration/headers/).
+
+# The .pages.dev addresses (production and every preview) stay out of search engines: only the domain is indexed.
+https://:project.pages.dev/*
+  X-Robots-Tag: noindex
+https://:version.:project.pages.dev/*
+  X-Robots-Tag: noindex
+
+# Security headers for every response.
 # No Content-Security-Policy yet: fonts and photos still come from third parties (OL-15); add one once they are self-hosted.
 /*
   Strict-Transport-Security: max-age=31536000

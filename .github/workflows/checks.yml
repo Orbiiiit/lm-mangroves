@@ -1,0 +1,24 @@
+# Every pull request and every push to another branch: the same checks as before a deploy, nothing deployed.
+name: Checks
+
+on:
+  pull_request:
+  push:
+    branches-ignore: [main]
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx astro check
+      - run: npm run build
+        env:
+          SITE_URL: https://mangrove-guadeloupe.fr
+      - run: node .claude/skills/step-review/scripts/check-dist.mjs

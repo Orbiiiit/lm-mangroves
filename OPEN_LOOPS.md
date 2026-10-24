@@ -6,7 +6,7 @@ Last review: 0158c1a (7 Oct 2026); lists, guide profiles, articles, comparison a
 
 ## Decisions needed
 
-- **OL-04 · Production domain: finish the switch** — Live on https://mangrove-guadeloupe.fr since Oct 2026 (`SITE_URL` set as a build variable; `astro.config.mjs` falls back to the domain). Still to do in the Cloudflare dashboard: `www` DNS record + redirect rule www → apex (no record exists, www fails); redirect or switch off `mangroves.app-e5e.workers.dev` once the domain is indexed (it still serves the whole site); Search Console + Bing Webmaster: verify the domain, submit `https://mangrove-guadeloupe.fr/sitemap.xml`; check "Block AI bots" stays off.
+- **OL-04 · Production domain: finish the move to Pages** — 24 Oct 2026: hosting moves from the Worker `mangroves` to the Pages project `mangrove-guadeloupe` (same setup as rivieres-canyons). Steps (README → Deploy): repository secrets, `main` branch, first deploy, move the custom domain from the Worker to the Pages project, check, then delete the Worker (this also removes `mangroves.app-e5e.workers.dev`). `www` → apex Redirect Rule in the zone. Later: Search Console + Bing Webmaster (verify the domain, submit `https://mangrove-guadeloupe.fr/sitemap.xml`); keep "Block AI bots" off.
 - **OL-05 · Lead capture provider and consent** — The "top 5" form is intent only, and disabled (`LeadCaptureBand`). Before enabling it: pick a provider, write the consent wording, log consent, double opt-in, and a legal-reviewed privacy page (`docs/project.md` §6).
 
 ## To do
@@ -23,7 +23,7 @@ Last review: 0158c1a (7 Oct 2026); lists, guide profiles, articles, comparison a
 - **OL-36 · Visitors' IP sent to third parties** — Google Fonts and hotlinked photos (Wikimedia, Parc national, operators) receive each visitor's IP (GDPR risk in the EU). Decision needed: self-host the two font families (`public/fonts/`, reverses the "Fonts: Google Fonts" decision) and download photos at build (ties to OL-15). Then add a Content-Security-Policy to `public/_headers`. Effort: M.
 - **OL-37 · No analytics** — Nothing measures visits or clicks on booking buttons (UTM tags only show in the partners' tools). Decision needed: a cookie-free tool (e.g. Cloudflare Web Analytics, no banner needed) and outbound-click counting. Effort: S.
 - **OL-38 · Link and image monitoring** — Partner pages and photos broke without notice; 9 source links already return 404 (Conservatoire du littoral moved its site). Next step: a weekly check of every outbound link and image on the live site (scheduled task or GitHub Action) that reports breakages; replace dead source links. Effort: S.
-- **OL-39 · Production branch** — The live site deploys from `claude/elegant-mendel-kx6eax`; there is no `main` and no check before deploy. Decision needed: create `main` as the production branch (Workers Builds → production branch), work on feature branches with preview deployments, and add a build check on pull requests. Effort: S.
+- **OL-39 · Production branch** — `main` becomes the production branch (the deploy workflow runs on push to `main`; other branches run `checks.yml`). Pending the user's go to create `main` from `claude/elegant-mendel-kx6eax`; then set `main` as the GitHub default branch. Effort: S.
 
 ## Known limitations (accepted for now)
 

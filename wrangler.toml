@@ -1,0 +1,5 @@
+# Cloudflare Pages project, deployed by .github/workflows/deploy.yml (same setup as rivieres-canyons).
+# Pages serves dist/ as is: our 404.html for unknown URLs, public/_headers for headers. No Worker.
+name = "mangrove-guadeloupe"
+pages_build_output_dir = "dist"
+compatibility_date = "2026-10-01"

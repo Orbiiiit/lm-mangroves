@@ -13,13 +13,16 @@ npm run build     # static HTML in dist/
 npm run check     # type check
 ```
 
-## Deploy (Cloudflare Workers)
+## Deploy (Cloudflare Pages, same setup as rivieres-canyons)
 
-The Worker `mangroves` serves the static build at **https://mangrove-guadeloupe.fr** (custom domain attached in the Cloudflare dashboard). Workers Builds runs on every push: build command `npm run build`, deploy command `npx wrangler deploy` (config in `wrangler.jsonc`: assets from `dist`, our `404.html` for unknown URLs). Node 22 (`.node-version`).
+GitHub Actions builds and deploys; Cloudflare only hosts. No Worker.
 
-- **`SITE_URL`** (build variable, Settings → Build → Variables): the production origin used by canonical URLs, the sitemap, `robots.txt`, `llms.txt`, Open Graph and JSON-LD. Without it, Workers Builds fall back to `https://mangrove-guadeloupe.fr` (`astro.config.mjs`).
-- **`INDEXABLE=false`** hides a deployment from crawlers (pages get `noindex`, `robots.txt` disallows all). Pages are indexed by default.
-- **`public/_headers`**: security headers and cache rules for every response.
+- **Push to `main`** → `.github/workflows/deploy.yml`: `astro check`, build, `check-dist`, then `wrangler pages deploy dist` to the Pages project **`mangrove-guadeloupe`** (created by the workflow if missing), then a check of the live `pages.dev` address. **Other branches and pull requests** → `.github/workflows/checks.yml` (same checks, no deploy).
+- **Repository secrets** (GitHub → Settings → Secrets and variables → Actions): `CLOUDFLARE_API_TOKEN` (custom token, `Account · Cloudflare Pages · Edit`) and `CLOUDFLARE_ACCOUNT_ID`. Without them the workflow runs the checks and says Cloudflare is not connected.
+- **`SITE_URL`** (optional repository variable): the production origin for canonical URLs, sitemap, `robots.txt`, `llms.txt`, Open Graph and JSON-LD. Default in CI: `https://mangrove-guadeloupe.fr`; local builds use `localhost`.
+- **Custom domain** `mangrove-guadeloupe.fr`: Pages project → Custom domains. `www` redirects to it with a zone Redirect Rule.
+- **`public/_headers`**: `noindex` on every `*.pages.dev` address, security headers, cache rules. Pages serves `404.html` for unknown URLs.
+- **`INDEXABLE=false`** (build env) hides a deployment from crawlers.
 
 ## Layout
 

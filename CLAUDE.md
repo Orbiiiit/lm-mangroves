@@ -45,7 +45,7 @@ Sites live in `data/mangroves-db.json` (Airtable mirror in `airtable/`, rules in
 
 ## Decided
 - **Working mode:** all work continues in Claude Code from these docs.
-- **Stack (decided 7 Oct 2026):** Astro, static output (one HTML file per route, JavaScript only for small interactions). Hosting: Cloudflare Workers (static assets, `wrangler.jsonc`) on https://mangrove-guadeloupe.fr. Code in `src/` (see `README.md`).
+- **Stack (decided 7 Oct 2026):** Astro, static output (one HTML file per route, JavaScript only for small interactions). Hosting (24 Oct 2026, aligned with rivieres-canyons): Cloudflare Pages project `mangrove-guadeloupe`, deployed by GitHub Actions on push to `main` (`.github/workflows/deploy.yml`, `wrangler.toml`), domain https://mangrove-guadeloupe.fr. No Worker. Code in `src/` (see `README.md`).
 - **Data:** keep `data/mangroves-db.json` as is for now; Airtable comes later (tables in `airtable/`, articles live in `Articles`, `Article Sections`, `Article FAQ`).
 - **URLs:** articles `/idees/<slug>` (not linked to a guide), guide profiles `/guides/<slug>`, sites `/mangrove/<slug>`.
 - **Access framing (7 Oct 2026):** every mangrove is free to visit; some on foot, others need a boat or kayak (own or rented) or a guide, who brings real advantages. All copy follows this: "L’accès est gratuit", then how to reach it, the guide as an option (`howToReach` in `src/lib/format.ts`). Sites with no access mode in the data make no access claim.

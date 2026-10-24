@@ -1,0 +1,65 @@
+# Puts the site online on Cloudflare Pages (README → Deploy). Same setup as rivieres-canyons.
+#   push to main           → checks, build, deploy
+#   Run workflow (by hand) → the same
+# Needs two repository secrets: CLOUDFLARE_API_TOKEN (Account · Cloudflare Pages · Edit) and CLOUDFLARE_ACCOUNT_ID.
+# Optional repository variable SITE_URL (default https://mangrove-guadeloupe.fr).
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      PROJECT: mangrove-guadeloupe
+      SITE_URL: ${{ vars.SITE_URL || 'https://mangrove-guadeloupe.fr' }}
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || vars.CLOUDFLARE_ACCOUNT_ID }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+
+      - name: Checks (types, build, built HTML)
+        run: |
+          npx astro check
+          npm run build
+          node .claude/skills/step-review/scripts/check-dist.mjs
+
+      - name: Cloudflare connected?
+        id: cf
+        run: |
+          if [ -z "$CLOUDFLARE_API_TOKEN" ] || [ -z "$CLOUDFLARE_ACCOUNT_ID" ]; then
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+            echo "Cloudflare is not connected yet: add the secrets CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID (README → Deploy). Nothing was deployed." >> "$GITHUB_STEP_SUMMARY"
+          else echo "ready=true" >> "$GITHUB_OUTPUT"; fi
+
+      - name: Create the Pages project if it doesn't exist
+        if: steps.cf.outputs.ready == 'true'
+        run: npx -y wrangler@4 pages project list | grep -q " $PROJECT " || npx -y wrangler@4 pages project create "$PROJECT" --production-branch main
+
+      - name: Deploy
+        if: steps.cf.outputs.ready == 'true'
+        run: npx -y wrangler@4 pages deploy dist --project-name "$PROJECT" --branch main --commit-dirty=true
+
+      - name: Check the live site
+        if: steps.cf.outputs.ready == 'true'
+        run: |
+          sleep 20
+          for p in / /mangrove/riviere-salee /robots.txt /sitemap.xml /llms.txt; do
+            code=$(curl -s -o /dev/null -w '%{http_code}' "https://$PROJECT.pages.dev$p"); echo "$p $code" | tee -a "$GITHUB_STEP_SUMMARY"
+            [ "$code" = 200 ] || exit 1
+          done
+          code=$(curl -s -o /dev/null -w '%{http_code}' "https://$PROJECT.pages.dev/page-inexistante"); echo "unknown page $code" | tee -a "$GITHUB_STEP_SUMMARY"; [ "$code" = 404 ]
+          curl -sI "https://$PROJECT.pages.dev/" | grep -qi 'x-robots-tag: noindex' && echo "pages.dev hidden from Google: yes" >> "$GITHUB_STEP_SUMMARY"
