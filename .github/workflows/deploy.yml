@@ -51,7 +51,10 @@ jobs:
 
       - name: Deploy
         if: steps.cf.outputs.ready == 'true'
-        run: npx -y wrangler@4 pages deploy dist --project-name "$PROJECT" --branch main --commit-dirty=true
+        env:
+          COMMIT_MESSAGE: ${{ github.event.head_commit.message || github.event_name }}
+        # Commit hash and message show on each deployment in Cloudflare (same as rivieres-canyons).
+        run: npx -y wrangler@4 pages deploy dist --project-name "$PROJECT" --branch main --commit-hash "$GITHUB_SHA" --commit-message "${COMMIT_MESSAGE:0:200}" --commit-dirty=true
 
       - name: Check the live site
         if: steps.cf.outputs.ready == 'true'
