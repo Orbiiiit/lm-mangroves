@@ -50,6 +50,8 @@ export interface Site {
   servedBy: OperatorKey | 'both' | null;
   gps: [number, number] | null;
   confidence: string;
+  /** Set by an Airtable pull when a site is not « Publié » (draft, hidden); absent = published. */
+  status?: string;
   facts: string[];
   sources: SiteSource[];
   images: SiteImage[];
@@ -153,8 +155,8 @@ export interface Article {
   related: string[];
 }
 
-/** Publishing rule (data/mangroves-db.json `publishRule`): hide sites still "à vérifier". */
-const isPublished = (s: Site) => s.confidence !== 'à vérifier';
+/** Publishing rule (data/mangroves-db.json `publishRule`): hide sites still "à vérifier", and drafts or hidden sites (Airtable « Statut »). */
+const isPublished = (s: Site) => s.confidence !== 'à vérifier' && (!s.status || s.status === 'published');
 
 /** Image order: mangrove shots first, partner photos first on guided sites (as in the prototype). */
 function orderImages(s: Site): SiteImage[] {

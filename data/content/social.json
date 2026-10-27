@@ -1,29 +1,6 @@
 {
   "_note": "Articles and posts about a site (\"Ils en parlent\"). Moved from the v12 prototype (SOCIAL).",
   "sites": {
-    "riviere-salee": [
-      {
-        "platform": "Blog",
-        "handle": "Made in Guadeloupe",
-        "date": "Article de blog",
-        "caption": "Récit d'une balade en bateau depuis la marina de Bas-du-Fort, sous les ponts de la Gabarre et de l'Alliance, entre les palétuviers.",
-        "url": "https://www.madeinguadeloupe.fr/2015/05/promenade-riviere-salee-guadeloupe-river-boat-madeinguadeloupe-blog.html"
-      },
-      {
-        "platform": "Sortie nature",
-        "handle": "Zones humides · Cap Excellence",
-        "date": "Février 2020",
-        "caption": "Sortie kayak de 4 h 30 dans la mangrove de la Rivière Salée, au départ de la base de Dolmare, pour la Journée mondiale des zones humides.",
-        "url": "https://www.zones-humides.org/decouverte-de-la-mangrove-de-la-riviere-salee-en-kayak"
-      },
-      {
-        "platform": "Blog",
-        "handle": "Les Merveilles du Monde libre",
-        "date": "Article de blog",
-        "caption": "Le rôle de la mangrove le long de la Rivière Salée, et pourquoi la visiter sans ancre ni hélice près des racines.",
-        "url": "https://ngandco.net/guadeloupe-la-riviere-salee"
-      }
-    ],
     "grand-cul-de-sac-marin": [
       {
         "platform": "Blog voyage",
@@ -45,6 +22,29 @@
         "date": "Article de blog",
         "caption": "Sainte-Rose côté nature : mangrove, îlet Caret et sorties en bateau à fond plat.",
         "url": "https://www.guadeloupevoyage.fr/sainte-rose-guadeloupe-mangrove-grand-cul-de-sac-marin-et-distilleries/"
+      }
+    ],
+    "riviere-salee": [
+      {
+        "platform": "Blog",
+        "handle": "Made in Guadeloupe",
+        "date": "Article de blog",
+        "caption": "Récit d'une balade en bateau depuis la marina de Bas-du-Fort, sous les ponts de la Gabarre et de l'Alliance, entre les palétuviers.",
+        "url": "https://www.madeinguadeloupe.fr/2015/05/promenade-riviere-salee-guadeloupe-river-boat-madeinguadeloupe-blog.html"
+      },
+      {
+        "platform": "Sortie nature",
+        "handle": "Zones humides · Cap Excellence",
+        "date": "Février 2020",
+        "caption": "Sortie kayak de 4 h 30 dans la mangrove de la Rivière Salée, au départ de la base de Dolmare, pour la Journée mondiale des zones humides.",
+        "url": "https://www.zones-humides.org/decouverte-de-la-mangrove-de-la-riviere-salee-en-kayak"
+      },
+      {
+        "platform": "Blog",
+        "handle": "Les Merveilles du Monde libre",
+        "date": "Article de blog",
+        "caption": "Le rôle de la mangrove le long de la Rivière Salée, et pourquoi la visiter sans ancre ni hélice près des racines.",
+        "url": "https://ngandco.net/guadeloupe-la-riviere-salee"
       }
     ]
   }

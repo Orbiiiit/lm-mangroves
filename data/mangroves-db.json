@@ -219,9 +219,7 @@
           "type": "media"
         }
       ],
-      "images": [
-        
-      ],
+      "images": [],
       "blurb": "Étape classique des sorties bateau au départ de Sainte-Rose.",
       "paragraphs": [
         "L'îlet Blanc fait partie des arrêts des sorties en bateau dans le Grand Cul-de-Sac Marin, au départ du port de Sainte-Rose.",
@@ -264,9 +262,7 @@
         }
       ],
       "internalNote": "Ajouter une source PNG officielle.",
-      "images": [
-        
-      ],
+      "images": [],
       "blurb": "Le plus grand îlet du Grand Cul-de-Sac Marin, couvert de mangrove.",
       "paragraphs": [
         "Fajou est le plus grand îlet du Grand Cul-de-Sac Marin. Il est constitué de mangrove et fait partie intégrante de la réserve naturelle.",
@@ -1337,11 +1333,11 @@
           "relevance": "contexte"
         }
       ],
-      "imagesTodo": "Aucune photo de mangrove trouvée",
       "blurb": "Une mosaïque de marais, forêts inondées et mangroves à Grand-Bourg.",
       "paragraphs": [
         "Folle Anse, à l'embouchure d'un petit bassin versant, réunit marais ouverts, forêts inondées et mangroves. Le site est protégé par le Conservatoire du littoral."
-      ]
+      ],
+      "imagesTodo": "Aucune photo de mangrove trouvée"
     },
     {
       "slug": "labyrinthe-morne-a-leau",
@@ -1502,9 +1498,9 @@
       "sources": [],
       "internalNote": "Aucune source trouvée. Retirer ou sourcer avant mise en ligne.",
       "images": [],
-      "imagesTodo": "Aucune photo de mangrove trouvée",
       "blurb": "",
-      "paragraphs": []
+      "paragraphs": [],
+      "imagesTodo": "Aucune photo de mangrove trouvée"
     },
     {
       "slug": "anse-a-la-barque",
@@ -1531,9 +1527,9 @@
       "sources": [],
       "internalNote": "Aucune source trouvée cette passe.",
       "images": [],
-      "imagesTodo": "Aucune photo de mangrove trouvée",
       "blurb": "",
-      "paragraphs": []
+      "paragraphs": [],
+      "imagesTodo": "Aucune photo de mangrove trouvée"
     }
   ],
   "rejected": [

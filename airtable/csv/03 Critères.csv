@@ -1,0 +1,10 @@
+﻿Critère,Clé,Groupe,Ordre
+Bateau,bateau,Activité,1
+Kayak,kayak,Activité,2
+À pied,marche,Activité,3
+Pédalo,pedalo,Activité,4
+Canot,canot,Activité,5
+En famille,en-famille,Public,6
+Oiseaux,oiseaux,Public,7
+Photogénique,photogenique,Public,8
+Accessible PMR,pmr,Public,9

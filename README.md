@@ -24,6 +24,14 @@ GitHub Actions builds and deploys; Cloudflare only hosts. No Worker.
 - **`public/_headers`**: `noindex` on every `*.pages.dev` address, security headers, cache rules. Pages serves `404.html` for unknown URLs.
 - **`INDEXABLE=false`** (build env) hides a deployment from crawlers.
 
+## Content (Airtable)
+
+Airtable is where content is edited. The base « Mangroves Gwada — Contenu » follows the generic directory base of rivieres-canyons (15 tables, French columns); `airtable/SPEC.md` lists every table and column, `airtable/tables.ts` maps them onto `data/`.
+
+- **Commands:** `npm run airtable:export` (writes `SPEC.md` and `airtable/csv/`, checks that data → Airtable → data is identical), `npm run content:pull` (base → `data/`, refused with the row and column named if anything is invalid), `airtable:build | reset | columns | verify | link`.
+- **GitHub Actions → Airtable** (by hand): `build-new-base` (once, with the workspace ID), `verify-base`, `add-new-columns`, `reset-and-refill-base`, `pull-content`. Secret: `AIRTABLE_TOKEN` (personal access token, scopes `data.records:read`, `data.records:write`, `schema.bases:read`, `schema.bases:write`, access to the workspace).
+- **Publishing:** the Deploy workflow pulls the base every night (deploys only if something changed), on demand (Run workflow → `publish-content`), or when an Airtable automation sends `repository_dispatch` `airtable-publish`. The pulled `data/` is committed back to `main`.
+
 ## Layout
 
 | Path | What |

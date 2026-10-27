@@ -1,6 +1,9 @@
 # Puts the site online on Cloudflare Pages (README → Deploy). Same setup as rivieres-canyons.
-#   push to main           → checks, build, deploy
-#   Run workflow (by hand) → the same
+#   push to main            → checks, build, deploy the code as it is in the repository
+#   Run workflow (by hand)  → "deploy" the same, or "publish-content": pull Airtable first, then deploy
+#   Airtable automation     → repository_dispatch "airtable-publish": pull Airtable, then deploy
+#   every night (03:41 Guadeloupe) → pull Airtable; deploys only when the content changed
+# Content pulled from Airtable is saved to the repository (data/) after a successful deploy.
 # Needs two repository secrets: CLOUDFLARE_API_TOKEN (Account · Cloudflare Pages · Edit) and CLOUDFLARE_ACCOUNT_ID.
 # Optional repository variable SITE_URL (default https://mangrove-guadeloupe.fr).
 name: Deploy
@@ -9,6 +12,21 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      job:
+        description: "What to do"
+        type: choice
+        options:
+          - deploy
+          - publish-content
+        default: publish-content
+  repository_dispatch:
+    types: [airtable-publish]
+  schedule:
+    - cron: "41 7 * * *"
+
+permissions:
+  contents: write
 
 concurrency:
   group: deploy
@@ -23,6 +41,7 @@ jobs:
       SITE_URL: ${{ vars.SITE_URL || 'https://mangrove-guadeloupe.fr' }}
       CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
       CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID || vars.CLOUDFLARE_ACCOUNT_ID }}
+      PULL: ${{ github.event_name == 'repository_dispatch' || github.event_name == 'schedule' || inputs.job == 'publish-content' }}
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-node@v5
@@ -31,7 +50,21 @@ jobs:
           cache: npm
       - run: npm ci
 
+      - name: Pull the content from Airtable (refused if invalid; then nothing is deployed)
+        if: env.PULL == 'true' && hashFiles('airtable/map.json') != ''
+        env:
+          AIRTABLE_TOKEN: ${{ secrets.AIRTABLE_TOKEN }}
+        run: npm run content:pull
+
+      - name: Nightly run without content changes stops here
+        id: changes
+        run: |
+          if [ "${{ github.event_name }}" = "schedule" ] && git diff --quiet; then
+            echo "deploy=false" >> "$GITHUB_OUTPUT"; echo "No content change since the last deployment." >> "$GITHUB_STEP_SUMMARY"
+          else echo "deploy=true" >> "$GITHUB_OUTPUT"; fi
+
       - name: Checks (types, build, built HTML)
+        if: steps.changes.outputs.deploy == 'true'
         run: |
           npx astro check
           npm run build
@@ -39,6 +72,7 @@ jobs:
 
       - name: Cloudflare connected?
         id: cf
+        if: steps.changes.outputs.deploy == 'true'
         run: |
           if [ -z "$CLOUDFLARE_API_TOKEN" ] || [ -z "$CLOUDFLARE_ACCOUNT_ID" ]; then
             echo "ready=false" >> "$GITHUB_OUTPUT"
@@ -66,3 +100,12 @@ jobs:
           done
           code=$(curl -s -o /dev/null -w '%{http_code}' "https://$PROJECT.pages.dev/page-inexistante"); echo "unknown page $code" | tee -a "$GITHUB_STEP_SUMMARY"; [ "$code" = 404 ]
           curl -sI "https://$PROJECT.pages.dev/" | grep -qi 'x-robots-tag: noindex' && echo "pages.dev hidden from Google: yes" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Save the content pulled from Airtable to the repository
+        if: steps.changes.outputs.deploy == 'true' && env.PULL == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
+          git add data
+          git diff --cached --quiet || git commit -m "Content from Airtable (${{ github.event_name }}, run ${{ github.run_number }})"
+          for i in 1 2 3; do git pull --rebase -X theirs origin main && git push && break; sleep 5; done

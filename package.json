@@ -7,7 +7,15 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "check": "astro check"
+    "check": "astro check",
+    "airtable:export": "tsx scripts/airtable.ts export",
+    "airtable:normalize": "tsx scripts/airtable.ts normalize",
+    "airtable:build": "tsx scripts/airtable.ts build",
+    "airtable:reset": "tsx scripts/airtable.ts reset",
+    "airtable:columns": "tsx scripts/airtable.ts columns",
+    "airtable:verify": "tsx scripts/airtable.ts verify",
+    "airtable:link": "tsx scripts/airtable.ts link",
+    "content:pull": "tsx scripts/airtable.ts pull"
   },
   "dependencies": {
     "astro": "^7.3.6"
@@ -15,6 +23,7 @@
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
     "@types/node": "^26.6.4",
+    "tsx": "^4.23.15",
     "typescript": "^6.0.3"
   }
 }

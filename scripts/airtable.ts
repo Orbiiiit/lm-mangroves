@@ -1,0 +1,216 @@
+// Airtable base for Mangroves Gwada (same engine and workflow as rivieres-canyons).
+//   npm run airtable:export   writes airtable/SPEC.md + airtable/csv/*.csv from data/, and checks the round trip
+//                             (data → CSV → data must be identical, so nothing is lost on import)
+//   npm run airtable:normalize   rewrites data/ in the exact format a pull writes (run once; then pulls only show real edits)
+//   npm run airtable:build    creates a NEW base in a workspace (AIRTABLE_WORKSPACE_ID), fills it, reads it back and compares;
+//                             writes airtable/map.json and airtable/BUILD_REPORT.md (refuses if map.json already names a base)
+//   npm run airtable:reset    same on the existing base: adds missing columns, deletes every row, writes data/ again (AIRTABLE_CONFIRM=RESET)
+//   npm run airtable:columns  adds the columns the code declares but the base lacks; no row is touched
+//   npm run airtable:verify   read-only: is the base identical to data/?
+//   npm run airtable:link     once the base exists: saves its table and field IDs in airtable/map.json (AIRTABLE_BASE_ID)
+//   npm run content:pull      reads the base into data/ (refused, data/ unchanged, if anything is invalid)
+import { readFileSync, writeFileSync, appendFileSync, mkdirSync, rmSync, existsSync } from 'node:fs';
+import { resolve, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { Codec, writeCsv, checkImportable, fetchBase, linkBase, createBase, pushRows, addMissingFields, clearTables, type Row, type Table, type Field, type BaseMap } from '../airtable/lib/engine';
+import { tables, toTables, fromTables, N } from '../airtable/tables';
+import { readContent, writeContent, type Content } from '../airtable/content';
+
+const outDir = resolve(dirname(fileURLToPath(import.meta.url)), '../airtable');
+const mapFile = resolve(outDir, 'map.json');
+const cmd = process.argv[2];
+const BASE_NAME = 'Mangroves Gwada — Contenu';
+
+/** Airtable-shaped rows (labels, primary values) → logical rows (keys). */
+function toLogical(TABLES: Table[], shaped: Record<string, Row[]>, errors: string[]): Record<string, Row[]> {
+  const codec = new Codec(TABLES, shaped, errors);
+  return Object.fromEntries(TABLES.map((t) => [t.id, (shaped[t.id] ?? []).map((row, i) => {
+    const where = `${t.name} « ${row[t.primary] ?? `ligne ${i + 2}`} »`;
+    return Object.fromEntries(t.fields.map((fd) => [fd.name, codec.in(fd, row[fd.name] ?? null, where)]));
+  })]));
+}
+
+/** Key-order-insensitive JSON (array order counts: it is the order on the site). */
+const canon = (v: unknown): unknown => Array.isArray(v) ? v.map(canon)
+  : v && typeof v === 'object' ? Object.fromEntries(Object.keys(v).sort().map((k) => [k, canon((v as any)[k])])) : v;
+function firstDiff(a: unknown, b: unknown, path = ''): string | null {
+  if (JSON.stringify(canon(a)) === JSON.stringify(canon(b))) return null;
+  if (a && b && typeof a === 'object' && typeof b === 'object') {
+    for (const k of new Set([...Object.keys(a), ...Object.keys(b)])) {
+      const d = firstDiff((a as any)[k], (b as any)[k], `${path}.${k}`);
+      if (d) return d;
+    }
+  }
+  return `${path}: ${JSON.stringify(a)?.slice(0, 160)} ≠ ${JSON.stringify(b)?.slice(0, 160)}`;
+}
+const WRITTEN = ['db', 'operators', 'siteContent', 'articles', 'compare', 'social', 'videos'] as const;
+const diffContent = (a: Content, b: Content) => {
+  for (const k of WRITTEN) { const d = firstDiff(a[k], b[k], k); if (d) return d; }
+  return null;
+};
+
+// ---------- SPEC.md ----------
+const TYPE_LABEL: Record<string, string> = {
+  singleLineText: 'Single line text', multilineText: 'Long text', number: 'Number', checkbox: 'Checkbox', date: 'Date (ISO)',
+  url: 'URL', email: 'Email', phoneNumber: 'Phone number', singleSelect: 'Single select', multipleSelects: 'Multiple select',
+  multipleRecordLinks: 'Link to another record', multipleAttachments: 'Attachment', singleCollaborator: 'User',
+  multipleCollaborators: 'User (several)', formula: 'Formula', count: 'Count', multipleLookupValues: 'Lookup',
+};
+const EDIT_LABEL = { all: '', orbit: 'Équipe', tech: 'Tech' } as const;
+const CLIENT_LABEL = { none: 'hidden', read: 'read only', comment: 'read + comment', own: 'edit their own rows', all: 'edit' } as const;
+const esc = (s: string) => s.replace(/\|/g, '\\|').replace(/\n/g, ' ');
+const csvName = (t: Table, i: number) => `${String(i + 1).padStart(2, '0')} ${t.name}.csv`;
+function typeCell(fd: Field) {
+  const base = TYPE_LABEL[fd.type];
+  if (fd.link) return `${base} → **${fd.link}**${fd.single ? ' (one record)' : ''}`;
+  if (fd.options) return `${base}: ${fd.options.map((o) => o.label).join(' · ')}`;
+  if (fd.type === 'number') return `${base}${fd.decimals ? ` (${fd.decimals} decimals)` : ' (integer)'}`;
+  return base;
+}
+function spec(TABLES: Table[], counts: Record<string, number>) {
+  return `# Airtable base: Mangroves Gwada
+
+Generated by \`npm run airtable:export\` from \`airtable/tables.ts\` and the content in \`data/\`. Do not edit by hand: the base and the site are described in one place, so they cannot drift.
+Design: the generic directory base of rivieres-canyons (\`docs/AIRTABLE_BASE_DESIGN.md\` in that repository; decisions D1–D6), mapped onto this site's content files. Engine: \`airtable/lib/engine.ts\` (copied from rivieres-canyons \`packages/core/src/airtable\`).
+
+## 1. Create the base
+GitHub → repository → **Actions** → **Airtable** → **Run workflow**, job \`build-new-base\`, with your workspace ID (\`wsp…\`, or the link of the workspace page). It needs the repository secret \`AIRTABLE_TOKEN\` (personal access token, scopes \`data.records:read\`, \`data.records:write\`, \`schema.bases:read\`, \`schema.bases:write\`, access to the workspace). The job creates every table and field, writes the content, reads it back, and saves \`airtable/BUILD_REPORT.md\` and \`airtable/map.json\` to the repository.
+
+From then on, Airtable is where content is edited (\`OPEN_LOOPS.md\` OL-25): the **Deploy** workflow pulls the base every night and on demand (job \`publish-content\`), checks it, and puts the site online. An invalid row stops the update with the row and column named; the current site stays online.
+
+## 2. What stays in the code
+Design and site rules are not content, so they live in the repository: risk icons and labels (\`data/content/vocab.json\`), activity pages (\`data/content/listings.json\`), the Parc national rules shown on Grand Cul-de-Sac Marin sites (\`vocab.json\` → \`zones\`), the site's own FAQ answers (computed from each site's data), and every layout. A new yes/no criterion in « ${N.criterion} » needs a code change before the site can use it.
+
+## 3. Tables
+${TABLES.map((t, i) => `### ${i + 1}. ${t.name} · ${counts[t.id] ?? 0} rows · file \`csv/${csvName(t, i)}\`
+${t.about} Guides and operators: ${CLIENT_LABEL[t.client]}. First column: **${t.primary}**.
+
+| Field | Type | Who edits | Help |
+|---|---|---|---|
+${t.fields.map((fd) => `| ${fd.helper ? '*Helper:* ' : ''}${esc(fd.name)} | ${esc(typeCell(fd))} | ${fd.helper ? '' : EDIT_LABEL[fd.edit ?? 'all']} | ${esc(fd.help ?? '')} |`).join('\n')}
+`).join('\n')}
+## 4. Rules
+- **Never change a Slug, Clé or Réf** once published: they are the page addresses and the links between tables.
+- **Order:** Airtable keeps no row order; the site sorts by « Ordre ».
+- **Prices carry their date:** « Prix relevés en » is required on every outing.
+- **Lists:** one item per line. Items with a label: « Libellé : valeur » (with an icon: « icône | Libellé : valeur »).
+`;
+}
+
+function report(file: string, title: string, lines: string[], errors: string[], status: string) {
+  const text = `# ${title}\n\nRun on ${new Date().toISOString().slice(0, 16).replace('T', ' ')} UTC. Status: **${status}**.\n\n${lines.map((l) => `- ${l}`).join('\n')}\n${errors.length ? `\n## Problems\n${errors.map((e) => `- ${e}`).join('\n')}\n` : ''}`;
+  if (file) writeFileSync(resolve(outDir, file), text);
+  console.log(text);
+  if (process.env.GITHUB_STEP_SUMMARY) appendFileSync(process.env.GITHUB_STEP_SUMMARY, text);
+}
+
+async function main() {
+  const content = readContent();
+  const TABLES = tables(content);
+  const errors: string[] = [], warnings: string[] = [];
+
+  if (cmd === 'export' || cmd === 'normalize') {
+    const logical = toTables(content);
+    // Commas in a linked table's first column only matter for a manual CSV import (the build job writes links by ID).
+    warnings.push(...checkImportable(TABLES, logical));
+    const codec = new Codec(TABLES, logical, errors);
+    const shaped: Record<string, Row[]> = {};
+    if (cmd === 'export') { rmSync(resolve(outDir, 'csv'), { recursive: true, force: true }); mkdirSync(resolve(outDir, 'csv'), { recursive: true }); }
+    TABLES.forEach((t, i) => {
+      if (cmd === 'export') writeFileSync(resolve(outDir, 'csv', csvName(t, i)), writeCsv(t, logical[t.id], codec));
+      // Read back as the API returns it (labels, primary values, link lists): the build job's path, links by record ID.
+      shaped[t.id] = logical[t.id].map((row) => Object.fromEntries(t.fields.map((fd) => [fd.name, codec.out(fd, row[fd.name] ?? null)])));
+    });
+    const back = fromTables(toLogical(TABLES, shaped, errors), content, errors);
+    if (back) {
+      if (cmd === 'normalize') { const changed = writeContent(back); console.log(`airtable:normalize: ${changed.length ? changed.join(', ') + ' rewritten' : 'already normalized'}`); }
+      const diff = diffContent(content, back);
+      if (diff) errors.push(`round trip differs at ${diff}`);
+    }
+    if (cmd === 'export') writeFileSync(resolve(outDir, 'SPEC.md'), spec(TABLES, Object.fromEntries(TABLES.map((t) => [t.id, logical[t.id].length]))));
+    console.log(`airtable: ${TABLES.length} tables · ${TABLES.reduce((n, t) => n + t.fields.length, 0)} fields · ${Object.values(logical).reduce((n, r) => n + r.length, 0)} rows · round trip ${errors.length ? 'FAILED' : 'identical'}`);
+    for (const w of warnings) console.warn('note (manual CSV import only):', w);
+    for (const e of errors) console.error('ERROR', e);
+    process.exit(errors.length ? 1 : 0);
+  }
+
+  const token = process.env.AIRTABLE_TOKEN?.trim();
+  if (!token) errors.push('The GitHub secret AIRTABLE_TOKEN is missing or empty (Settings → Secrets and variables → Actions → New repository secret, name exactly AIRTABLE_TOKEN).');
+  else if (!token.startsWith('pat')) errors.push('AIRTABLE_TOKEN does not look like an Airtable personal access token (it starts with "pat").');
+  const existing = existsSync(mapFile) ? (JSON.parse(readFileSync(mapFile, 'utf8')) as BaseMap) : null;
+
+  if (cmd === 'build' || cmd === 'reset') {
+    const reset = cmd === 'reset', log: string[] = [];
+    const workspaceId = process.env.AIRTABLE_WORKSPACE_ID?.match(/wsp[A-Za-z0-9]{14}/)?.[0];
+    if (reset) {
+      if (!existing) errors.push('airtable/map.json is missing: there is no base to reset (use build-new-base).');
+      if (process.env.AIRTABLE_CONFIRM?.trim() !== 'RESET') errors.push('Type RESET in the "confirm" field: this job deletes every row of the base and writes data/ again.');
+    } else {
+      if (!workspaceId) errors.push(`No workspace ID found in "${process.env.AIRTABLE_WORKSPACE_ID ?? ''}": paste the ID that starts with "wsp" (or the whole link of the workspace page).`);
+      if (existing && !process.argv.includes('--force')) errors.push(`airtable/map.json already names base ${existing.base_id}: refusing to create a second base (use the reset job to rewrite that one).`);
+    }
+    const logical = toTables(content);
+    const codec = new Codec(TABLES, logical, errors);
+    if (errors.length) { report('BUILD_REPORT.md', 'Airtable build report', log, errors, 'not started'); process.exit(1); }
+    let baseId = existing?.base_id ?? '';
+    try {
+      if (reset) {
+        const { added, problems } = await addMissingFields(TABLES, baseId, token!);
+        errors.push(...problems); log.push(added.length ? `Fields added: ${added.join(', ')}.` : 'No field was missing.');
+      } else {
+        const created = await createBase(TABLES, workspaceId!, BASE_NAME, token!);
+        baseId = created.baseId; errors.push(...created.problems); log.push(`Base « ${BASE_NAME} » created with ${TABLES.length} tables: https://airtable.com/${baseId}`);
+      }
+      const linked = await linkBase(TABLES, baseId, token!);
+      writeFileSync(mapFile, JSON.stringify(linked.map, null, 2) + '\n');
+      errors.push(...linked.problems);
+      if (reset) log.push(`Rows deleted before writing again: ${await clearTables(TABLES, linked.map, token!)}.`);
+      const counts = await pushRows(TABLES, linked.map, logical, codec, token!);
+      log.push(`Rows written: ${TABLES.map((t) => `${t.name} ${counts[t.id]}`).join(' · ')}.`);
+      const back = fromTables(toLogical(TABLES, await fetchBase(TABLES, linked.map, token!), errors), content, errors);
+      const diff = back && diffContent(content, back);
+      if (diff) errors.push(`read-back differs at ${diff}`); else if (back) log.push('Read back through the API: identical to data/.');
+      report('BUILD_REPORT.md', 'Airtable build report', log, errors, errors.length ? 'done with problems' : 'done');
+    } catch (e) {
+      errors.push((e as Error).message);
+      report('BUILD_REPORT.md', 'Airtable build report', log, errors, 'failed');
+    }
+    process.exit(errors.length ? 1 : 0);
+  }
+
+  if (cmd === 'link') {
+    const baseId = process.env.AIRTABLE_BASE_ID?.match(/app[A-Za-z0-9]{14}/)?.[0];
+    if (!baseId) errors.push('AIRTABLE_BASE_ID is missing (the app… part of the base link).');
+    if (errors.length) { report('', 'Airtable link', [], errors, 'not started'); process.exit(1); }
+    const { map, problems } = await linkBase(TABLES, baseId!, token!);
+    writeFileSync(mapFile, JSON.stringify(map, null, 2) + '\n');
+    report('', 'Airtable link', [`${Object.keys(map.tables).length}/${TABLES.length} tables linked to base ${baseId}.`], problems, problems.length ? 'incomplete' : 'done');
+    process.exit(problems.length ? 1 : 0);
+  }
+
+  if (!existing) errors.push('airtable/map.json is missing: build the base first (job build-new-base) or link an existing one.');
+  if (errors.length) { report('', `Airtable ${cmd}`, [], errors, 'not started'); process.exit(1); }
+
+  if (cmd === 'columns') {
+    const { added, problems } = await addMissingFields(TABLES, existing!.base_id, token!);
+    const linked = await linkBase(TABLES, existing!.base_id, token!);
+    writeFileSync(mapFile, JSON.stringify(linked.map, null, 2) + '\n');
+    const all = [...problems, ...linked.problems];
+    report('', 'Airtable: new columns', [added.length ? `Added: ${added.join(', ')}.` : 'No column was missing.', 'No row was changed.'], all, all.length ? 'done with problems' : 'done');
+    process.exit(all.length ? 1 : 0);
+  }
+  if (cmd === 'verify' || cmd === 'pull') {
+    const back = fromTables(toLogical(TABLES, await fetchBase(TABLES, existing!, token!), errors), content, errors);
+    if (cmd === 'verify') {
+      const diff = back && diffContent(content, back);
+      if (diff) errors.push(`the base differs from data/ at ${diff}`);
+      report('', 'Airtable check', [`Base \`${existing!.base_id}\`: ${errors.length ? 'differences found' : 'identical to data/'}.`], errors, errors.length ? 'differences' : 'identical');
+      process.exit(errors.length ? 1 : 0);
+    }
+    const changed = back && !errors.length ? writeContent(back) : [];
+    report('', 'Content pull', [errors.length ? 'Refused: data/ is unchanged.' : changed.length ? `Updated: ${changed.join(', ')}.` : 'No change since the last pull.'], errors, errors.length ? 'refused' : 'done');
+    process.exit(errors.length ? 1 : 0);
+  }
+  throw new Error('usage: airtable.ts export | normalize | build | reset | columns | verify | link | pull');
+}
+main().catch((e) => { console.error(e.message); process.exit(1); });

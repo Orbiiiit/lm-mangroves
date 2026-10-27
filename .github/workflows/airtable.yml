@@ -1,0 +1,86 @@
+# Airtable jobs, started by hand from the GitHub "Actions" tab (Run workflow). Same jobs as rivieres-canyons.
+# GitHub's servers reach api.airtable.com; the token stays in the repository's secrets (AIRTABLE_TOKEN).
+name: Airtable
+
+on:
+  workflow_dispatch:
+    inputs:
+      job:
+        description: "What to do"
+        type: choice
+        options:
+          - verify-base
+          - add-new-columns
+          - build-new-base
+          - reset-and-refill-base
+          - pull-content
+        default: verify-base
+      workspace_id:
+        description: "Workspace ID (starts with wsp…) or the link of the workspace page, only for build-new-base"
+        required: false
+        type: string
+      confirm:
+        description: "Type RESET to confirm reset-and-refill-base (deletes every row of the base, then writes data/ again)"
+        required: false
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: airtable
+  cancel-in-progress: false
+
+jobs:
+  airtable:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      AIRTABLE_TOKEN: ${{ secrets.AIRTABLE_TOKEN }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+
+      - name: Build a new base and fill it
+        if: inputs.job == 'build-new-base'
+        env:
+          AIRTABLE_WORKSPACE_ID: ${{ inputs.workspace_id }}
+        run: npm run airtable:build
+
+      - name: Complete the base and write data/ again
+        if: inputs.job == 'reset-and-refill-base'
+        env:
+          AIRTABLE_CONFIRM: ${{ inputs.confirm }}
+        run: npm run airtable:reset
+
+      - name: Check the base against the repository (read-only)
+        if: inputs.job == 'verify-base'
+        run: npm run airtable:verify
+
+      - name: Add the columns the code declares but the base lacks (no row is changed)
+        if: inputs.job == 'add-new-columns'
+        run: npm run airtable:columns
+
+      - name: Pull the content from Airtable, then check the site builds
+        if: inputs.job == 'pull-content'
+        run: |
+          npm run content:pull
+          npm run build
+          node .claude/skills/step-review/scripts/check-dist.mjs
+
+      - name: Save the results to the repository
+        if: always()
+        env:
+          # data/ is saved only when every step passed (a pull that breaks the build is never kept).
+          SAVE_DATA: ${{ job.status == 'success' }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
+          git add airtable
+          if [ "$SAVE_DATA" = "true" ]; then git add data; else git checkout -- data 2>/dev/null || true; fi
+          git diff --cached --quiet || git commit -m "Airtable: ${{ inputs.job }} (run ${{ github.run_number }})"
+          for i in 1 2 3; do git pull --rebase -X theirs origin "$GITHUB_REF_NAME" && git push && break; sleep 5; done

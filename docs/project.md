@@ -57,7 +57,7 @@ Bold only for alerts and values (now: two weights); one loud element per block; 
 ## 6. Stack, data flow and lead-capture intent
 
 - **Stack and hosting: decided (7 Oct 2026).** Astro with static output, hosted on Cloudflare Pages. Every route is a real URL with complete HTML (title, meta, canonical, JSON-LD) without JavaScript.
-- **Data flow, phase 1:** build from `data/mangroves-db.json` and content moved out of the prototype into data files, unchanged in meaning. **Phase 2:** connect Airtable (tables per `airtable/README.md`) as the editing source, keeping slugs and keys. Design the data layer so the source can be swapped without touching components (pages are the only data consumers).
+- **Data flow (27 Oct 2026):** Airtable is the editing source (base built from `airtable/tables.ts`, the generic directory base of rivieres-canyons). The Deploy workflow pulls it into `data/` (nightly, on demand, or from an Airtable automation), checks it and deploys; the site reads only `data/` through `src/lib/data.ts`. Spec: `airtable/SPEC.md`.
 - **Lead capture (intent only, nothing implemented):** the home page offers a one-time "top 5 des journées en mangrove" by SMS or e-mail, with a consent line and a link to the privacy page. Purpose: build an audience for direct partner bookings. Not wired: no provider, storage, consent logging or double opt-in yet; the form must not claim to send anything until it does. Needs a provider choice, GDPR-compliant consent wording and a legal-reviewed privacy page before launch.
 - **Fonts:** Google Fonts (Spectral 600 + 400 italic, Work Sans 400 + 600, `display=swap`, preconnect); both are SIL Open Font License 1.1.
 
