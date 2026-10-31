@@ -1,0 +1,251 @@
+{
+  "base_id": "appfP1Io6QMBpRChA",
+  "tables": {
+    "Lieux": {
+      "id": "tbl8ppiF3xDTYtEe9",
+      "fields": {
+        "Nom": "fldmuYlUqD1xZFPdj",
+        "Slug": "fldw9jfSMhd8LIoXA",
+        "Ordre": "fldEsxRThdogbgoZm",
+        "Statut": "fldrmTGN6CjzsxKfD",
+        "Note de statut": "fld76ajWbYGUbsM6s",
+        "Accroche": "fld1yZcOSNVQypzsK",
+        "Description": "flddnI7nsVkcCT81l",
+        "Phrase signature": "flddPQ4r5mxpu1gyL",
+        "Titre H2 — aperçu": "fldLZlpDeHYvPyDg1",
+        "Repères clés": "fld8cZZAD3hYgeExT",
+        "Autres noms": "fldhdiq9zArHIxLig",
+        "Histoire du nom": "fldDft6CYDUJkgbMD",
+        "Conseil — texte": "fld1FNTppgNNrku8J",
+        "Conseil — opérateur": "fldkVJmWaDGI9gRLb",
+        "Critères": "fldxcYdL6Em8iLmLt",
+        "Difficulté": "fldUYaVphRl2yqlza",
+        "Durée": "fldPuZetSUoPtpdJd",
+        "Distance (km)": "fldWRxwZ9FpqqPTi7",
+        "Accès": "fldlr4TkUYLpfSouI",
+        "Protection": "fldGVQAVh9ec6sGqK",
+        "Opérateurs": "fld31C3DTAQsEzQBq",
+        "Île": "fldFbxNAtBkZDmuKO",
+        "Zone": "fldheZKEoM2VIcm8z",
+        "Communes": "fldYsWRCehJ1OCMP2",
+        "Latitude": "fldzmvhANYbu61mYa",
+        "Longitude": "fldNqbsdlZPmNonDY",
+        "Quand y aller": "fldrEeJMwKeSWc2PT",
+        "Accès — route": "fldze3YEV4y0EIYQJ",
+        "Accès — bus": "fld51rH8IH76AImkx",
+        "Accès — parking": "fld6DrFEr7xY8GfCV",
+        "Accès — par vos propres moyens": "fldBsv4izkwGzE3f0",
+        "Sac à prévoir": "fldhu8ohc1uW1hFSt",
+        "Risques": "fldYJzE9Ah7HOU7vf",
+        "Encadré — icône": "fldM2sVnq7FyfZJuI",
+        "Encadré — titre": "fldjNUsE82cBitXyF",
+        "Encadré — texte": "fldKEfx8CGSZkh61a",
+        "Alerte — titre": "fldZ6Z5Ly4cVBYuHl",
+        "Alerte — texte": "fldH27mGfMdiIX4hW",
+        "Alerte — points": "fldoHqaWQWztVhZEZ",
+        "Niveau de vérification": "fldc0TkaAC0j80bzq",
+        "À confirmer": "fldDXvzXufLu9ZPNk",
+        "Paragraphes à confirmer": "fld1vBDXY6wYgdXfr",
+        "Photos à trouver": "fldO73LmhSQt2T5IA",
+        "Note interne": "fldI4mJVzu8piRHuj"
+      }
+    },
+    "Communes": {
+      "id": "tblBqO0XCKli6un8q",
+      "fields": {
+        "Nom": "fldtFnZTmJZlNyje6"
+      }
+    },
+    "Critères": {
+      "id": "tblee6iorFEfYWAv2",
+      "fields": {
+        "Critère": "fldzxGwc4TzU9kyfw",
+        "Clé": "fld2vdtOFk4GSEWZG",
+        "Groupe": "fldE7Xeu3vfGj7HZ8",
+        "Ordre": "fld5B9Ko3Xi2slA9l"
+      }
+    },
+    "Opérateurs": {
+      "id": "tblOEv653yAsxuHOO",
+      "fields": {
+        "Nom": "fldfqRFOA1XY0Hgwj",
+        "Clé": "fld9rYWqYBrbDbBS9",
+        "Ordre": "fldicKVmkgkjbLk8h",
+        "Type": "fldst1iJNTvmUS4zy",
+        "Mode": "fldrYEXC7teAXooU2",
+        "Accréditation": "fldvabVezbEDAn5SH",
+        "Accroche": "fldJM9JLqTQ6LDxBG",
+        "Présentation": "fldug0OgaCe6tzxsU",
+        "Présentation — accueil": "fldEkPTTXL7zULPQo",
+        "Niveau": "fldK0hvRuJMww2OGm",
+        "Note": "fldciSmCP9mWjgEK4",
+        "Site web": "fldoNKnTrM4JCXmmV",
+        "Domaine": "fld1VfsZgE5jqXVPS",
+        "Page contact": "fldAbGw0R2RHuYtcS",
+        "Lien de réservation": "fldGRtpXoPX0hUOje",
+        "Pour qui": "fldfo9dhRIf4Lmdbc",
+        "Pas pour vous si": "fld5cnH7cIeFIxWyQ",
+        "Comparatif — texte": "fldzf13Fp2KIvKxad",
+        "Comparatif — idéal pour": "flddMZZxKvPxxRka5",
+        "Comparatif — mode": "fldnnGeUdEHiXPhS7"
+      }
+    },
+    "Guides": {
+      "id": "tblJHZ72R5hwTlDso",
+      "fields": {
+        "Prénom": "fldxleVTakTBjVIEH",
+        "Clé": "fldiiCMN8YfvpgQDl",
+        "Opérateur": "fldKPCRbcH1V8j8g1",
+        "Nom complet": "fld8wqLQkZkwJUBH8",
+        "Photo": "fldkUgmkUathce8BQ",
+        "Rôle": "fldNk0diRlcEXX7Hj",
+        "Bio": "fldV5gPArgf9IR45D",
+        "Repères": "fldm1WTyONvngiavu",
+        "Histoire": "fldqJwkTLU2XecSAd",
+        "Pourquoi avec ce guide": "fldHYdnHEEtvbjzu3"
+      }
+    },
+    "Sorties": {
+      "id": "tblo8KqgYY9VZ8bgy",
+      "fields": {
+        "Nom": "fldzLE0X9oVI0U7xp",
+        "Slug": "fldy4veOvhP0tCsJF",
+        "Opérateur": "fldrBGO4Rgnc8elxX",
+        "Lieu": "fldmgB8uKlaF7yUjj",
+        "Résumé": "flddC6LgJzS5yQcwl",
+        "Prix adulte (€)": "fldbTgo6WQsajxkbU",
+        "Note de prix": "fld0OrcvO2vW4KRYd",
+        "Prix relevés en": "fldJRBalj5r32ZgKL",
+        "Durée": "fldQveS0vgUHYubxI",
+        "Âge minimum": "fldOG0oW0FZLlMa94",
+        "Départ": "fldpTCufNV5ytifGa",
+        "Points forts": "fld5VaL9xr06RsyD6",
+        "Programme": "fldAKqqcMFMqqHWFg",
+        "Inclus": "fld7XizY2MQ1Qi2hI",
+        "À apporter": "fld6tW9vnY7K7YnSl",
+        "Infos pratiques": "fldHZ4BjoWx0keCvr",
+        "À confirmer": "fldL7Ei1TxmSj1W3g"
+      }
+    },
+    "Avis": {
+      "id": "tblpeTMZ6CO8xnS5U",
+      "fields": {
+        "Réf": "fld3tFyf09jnulP32",
+        "Opérateur": "fldZbXZ1YgC7km0Bw",
+        "Ordre": "fldARztcjDy0MJKaF",
+        "Citation": "fldTW1dcxc0HEpKUy",
+        "Auteur": "fldaSuM121BZW7uj7"
+      }
+    },
+    "Photos": {
+      "id": "tbl79D4QSUxyTOp1D",
+      "fields": {
+        "Réf": "fldlPuA1HG1wP3JQ1",
+        "Lieu": "fldoRRX4n7iGbtj2S",
+        "Ordre": "fldhixlMZkaBpttdO",
+        "Lien de la photo": "fldqm2eAV1jEu8lSl",
+        "Miniature": "fldfLY0lQUzmclD2N",
+        "Légende": "fldxK36tD59G2hsCE",
+        "Crédit": "fldHA4L1dEiNI4fD4",
+        "Licence": "fldJPaQm6EXgpFEME",
+        "Droits": "fldNFArqGwaVSc8mv",
+        "Source — nom": "fldc8i0fVR9KM8jCU",
+        "Source — page": "fldNqLgEOhCllchgq",
+        "Pertinence": "fldnrm4jZOubi4c5Y",
+        "Note": "fldhRwz6f1NeEfPzb"
+      }
+    },
+    "Sources": {
+      "id": "tbl8mIUOmTCasVf4o",
+      "fields": {
+        "Réf": "fldfPsUZ1VjRqCS1B",
+        "Lieu": "fldDsJtq5d0o2oTWS",
+        "Ordre": "flddQflI4FjfzAH0E",
+        "Nom": "fldoFUbUCS9I1J4iE",
+        "Lien": "fldr04K6s1Mr4jOte",
+        "Type": "fldRHgyp6Bh8kAyTI"
+      }
+    },
+    "Articles": {
+      "id": "tblZvsps1VuLrkyJV",
+      "fields": {
+        "Libellé": "fldOs5A95Y2T5alp9",
+        "Slug": "fldUePh4WbFdlY2cD",
+        "Ordre": "fldxZkoxhyBFZN6he",
+        "Fil d'Ariane": "fldISJ9jyNMoDqw4R",
+        "Catégorie": "fld5DIItgrq30c1lE",
+        "Icône": "fldukJosYBnMd625m",
+        "Titre (H1)": "fldgSV4gxuRAdNaTS",
+        "Photo principale": "fldX4wLiS1pU9epnX",
+        "Crédit photo": "fldUQyElh8BVvG0I8",
+        "Mis à jour le": "fldKkRi8C22TTFSf1",
+        "Temps de lecture": "fldBKk7JNFypayz16",
+        "Introduction": "fldEZiVhZM7vN2wN8",
+        "Réponse courte": "fldkewDhBeVPXef6K",
+        "Titre H2 — guide": "fldvuyprw6xZcb1wp",
+        "Bon à savoir": "fldbPMneKVysSHYqN",
+        "Avant de partir": "fldE0aNLLi0iT3O4x",
+        "Réponses rapides": "fldnfywCnogQ14tPI",
+        "Critères": "fld39YoQz9wnxbLbv",
+        "Sélection — libellé": "fld7yhDcKtLFwCI8o",
+        "Opérateurs": "flde2BM8rUMTIU4Gr",
+        "Articles liés": "fld7xJMPLhaYlYVja",
+        "Titre SEO": "fldufA5nhmqO25mmF",
+        "Description SEO": "fldOKug98Hh34cGBh"
+      }
+    },
+    "Sections d'article": {
+      "id": "tblxVsWUBbU9XLj0B",
+      "fields": {
+        "Titre": "fldTjCaUJzLvDQ7wu",
+        "Article": "fldSrC9KVT7O7Nshe",
+        "Genre": "fld2ngJJsrF5m9kBr",
+        "Ordre": "fldV7GNwIIgXVpVGF",
+        "Texte": "fldfWlrcomA9HHMHj"
+      }
+    },
+    "FAQ": {
+      "id": "tblKXqm8K56X8OjTM",
+      "fields": {
+        "Question": "fldPO811THWOlVvm7",
+        "Article": "fldgqsEHNTwtcbG7L",
+        "Ordre": "fldrecWyZaVwd7N7s",
+        "Réponse": "fldIGTtd5pkwxC4bO"
+      }
+    },
+    "Publications": {
+      "id": "tbl88FbovdehM9Jlb",
+      "fields": {
+        "Réf": "fld0PASyAL8U3njPG",
+        "Lieu": "fldu4T9zZEc4iVwR7",
+        "Genre": "fldefuQ0vniEz9gQK",
+        "Ordre": "fldAtLF7N48ZZWVA5",
+        "Plateforme": "fldGXIYDLBcUfIcW9",
+        "Compte": "fldl3JcXtIk8XzUuD",
+        "Titre": "fldhFsvp2fcI85IHz",
+        "Date": "fldcp0JvOCNEkSUt0",
+        "Texte": "fldGjO0p4YHqjz6Df",
+        "Lien": "fldk4OZidNTOynaBP",
+        "Recherche": "fldNO3LhaYmLVYRWW"
+      }
+    },
+    "Comparatif": {
+      "id": "tblYkkE5Xtvc4n8Ix",
+      "fields": {
+        "Critère": "fldpkgceAA0qGYJxU",
+        "Ordre": "fldnevSkI842W0BMs",
+        "Bateau": "fld3U61R0kcjsbAYM",
+        "Kayak": "fldtG1dJ7UsLs8QpH"
+      }
+    },
+    "Textes du site": {
+      "id": "tblULS42nvXu2afMN",
+      "fields": {
+        "Clé": "fldJrbqCy15RcJOOy",
+        "Page": "fldLwrxe4kUuTtgEc",
+        "Texte": "fldxAPOeHx4zwOjFv",
+        "Liste": "fldsAVLO8vWaUil78"
+      }
+    }
+  }
+}

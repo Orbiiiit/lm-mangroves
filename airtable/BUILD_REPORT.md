@@ -1,8 +1,7 @@
 # Airtable build report
 
-Run on 2026-10-31 10:41 UTC. Status: **failed**.
+Run on 2026-10-31 10:55 UTC. Status: **done**.
 
-
-
-## Problems
-- Airtable POST /meta/bases: 403 {"error":{"type":"INVALID_PERMISSIONS_OR_MODEL_NOT_FOUND","message":"Invalid permissions, or the requested model was not found. Check that both your user and your token have the required permissions, and that the model names and/or ids are correct."}}
+- Base « Mangroves Gwada — Contenu » created with 15 tables: https://airtable.com/appfP1Io6QMBpRChA
+- Rows written: Lieux 24 · Communes 15 · Critères 9 · Opérateurs 2 · Guides 2 · Sorties 2 · Avis 4 · Photos 49 · Sources 38 · Articles 5 · Sections d'article 29 · FAQ 21 · Publications 11 · Comparatif 6 · Textes du site 5.
+- Read back through the API: identical to data/.
