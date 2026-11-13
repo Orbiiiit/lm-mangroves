@@ -6,11 +6,11 @@ Toutes les images sont chargées depuis des sites tiers (aucune image n'est stoc
 
 | Source | Droits | Licence | Images | Page source (exemple) |
 |---|---|---|---|---|
-| Blue Lagoon | opérateur partenaire | Photo opérateur | 4 | https://www.bluelagoon-gp.com/ |
+| Blue Lagoon | opérateur partenaire | Photo opérateur | 2 | https://www.bluelagoon-gp.com/ |
 | Wikimedia Commons | libre (CC) | CC BY-SA — à confirmer sur la page | 10 | https://commons.wikimedia.org/wiki/File:Nyctanassa_violacea_in_a_mangrove_of_Guadeloupe%2C_2.jpg |
 | Yalodé | opérateur partenaire | Photo opérateur | 9 | https://www.kayak-guadeloupe.fr/yalode.html |
 | Rando Guadeloupe (Geotrek PNG) | autorisation requise | © PNG — tous droits réservés | 19 | https://www.randoguadeloupe.gp/fr/trek/10068-Littoral-Vieux-Bourg--Babin |
-| Wikimedia Commons | libre (CC) | CC BY-SA 4.0 | 1 | https://commons.wikimedia.org/wiki/File:Maison_de_la_mangrove%2C_Les_Abymes%2C_Guadeloupe.jpg |
+| Wikimedia Commons | libre (CC) | CC BY-SA 4.0 | 4 | https://commons.wikimedia.org/wiki/File:Maison_de_la_mangrove%2C_Les_Abymes%2C_Guadeloupe.jpg |
 | Rando Guadeloupe (Geotrek PNG) | autorisation requise | © Emilie Savy / PNG — tous droits réservés | 2 | https://www.randoguadeloupe.gp/en/trek/16704-Pointe-a-Bacchus |
 | Rando Guadeloupe (Geotrek PNG) | autorisation requise | © CD 971 — tous droits réservés | 5 | https://www.randoguadeloupe.gp/fr/trek/10709-Sentier-littoral-de-Saint-Felix |
 | Rando Guadeloupe (Geotrek PNG) | autorisation requise | © F. Frederic - CD 971 — tous droits réservés | 3 | https://www.randoguadeloupe.gp/fr/trek/9012-Sentier-de-Vieux-Fort-(M.G.) |
@@ -25,8 +25,8 @@ Toutes les images sont chargées depuis des sites tiers (aucune image n'est stoc
 | riviere-salee-01 | riviere-salee | Auteur Wikimedia Commons (voir page) | CC BY-SA — à confirmer sur la page | libre (CC) | https://commons.wikimedia.org/wiki/File:La_Rivi%C3%A8re_Sal%C3%A9e_01.jpg |
 | riviere-salee-02 | riviere-salee | Auteur Wikimedia Commons (voir page) | CC BY-SA — à confirmer sur la page | libre (CC) | https://commons.wikimedia.org/wiki/File:La_Rivi%C3%A8re_Sal%C3%A9e_02.jpg |
 | riviere-salee-03 | riviere-salee | Blue Lagoon | Photo opérateur | opérateur partenaire | https://www.bluelagoon-gp.com/ |
-| ilet-blanc-01 | ilet-blanc | Blue Lagoon | Photo opérateur | opérateur partenaire | https://www.bluelagoon-gp.com/ |
-| ilet-a-fajou-01 | ilet-a-fajou | Blue Lagoon | Photo opérateur | opérateur partenaire | https://www.bluelagoon-gp.com/ |
+| ilet-blanc-01 | ilet-blanc | Enrevseluj | CC BY-SA 4.0 | libre (CC) | https://commons.wikimedia.org/wiki/File:Îlet_Blanc_(suite).jpg |
+| ilet-a-fajou-01 | ilet-a-fajou | Alain NEGRONI | CC BY-SA 4.0 | libre (CC) | https://commons.wikimedia.org/wiki/File:Approche.jpg |
 | lagon-vieux-bourg-01 | lagon-vieux-bourg | PNG | © PNG — tous droits réservés | autorisation requise | https://www.randoguadeloupe.gp/fr/trek/10068-Littoral-Vieux-Bourg--Babin |
 | lagon-vieux-bourg-02 | lagon-vieux-bourg | Yalodé | Photo opérateur | opérateur partenaire | https://www.kayak-guadeloupe.fr/yalode.html |
 | lagon-vieux-bourg-03 | lagon-vieux-bourg | Yalodé | Photo opérateur | opérateur partenaire | https://www.kayak-guadeloupe.fr/yalode.html |
@@ -53,7 +53,8 @@ Toutes les images sont chargées depuis des sites tiers (aucune image n'est stoc
 | jarry-foret-marecageuse-01 | jarry-foret-marecageuse | Auteur Wikimedia Commons (voir page) | CC BY-SA — à confirmer sur la page | libre (CC) | https://commons.wikimedia.org/wiki/File:Baie_de_Baie-Mahault.jpg |
 | riviere-lezarde-01 | riviere-lezarde | Emilie Savy / PNG | © Emilie Savy / PNG — tous droits réservés | autorisation requise | https://www.randoguadeloupe.gp/en/trek/16704-Pointe-a-Bacchus |
 | riviere-lezarde-02 | riviere-lezarde | Auteur Wikimedia Commons (voir page) | CC BY-SA — à confirmer sur la page | libre (CC) | https://commons.wikimedia.org/wiki/File:%C3%8Elet_%C3%A0_N%C3%A8gre_et_%C3%AElet_%C3%A0_Cabrit.jpg |
-| riviere-moustique-goyave-01 | riviere-moustique-goyave | Auteur Wikimedia Commons (voir page) | CC BY-SA — à confirmer sur la page | libre (CC) | https://commons.wikimedia.org/wiki/File:Plage_Sainte-Claire_%C3%A0_Goyave.JPG |
+| riviere-moustique-goyave-01 | riviere-moustique-goyave | Filo gèn' | CC BY-SA 4.0 | libre (CC) | https://commons.wikimedia.org/wiki/File:Îlet_Fortune.jpg |
+| riviere-moustique-goyave-02 | riviere-moustique-goyave | Auteur Wikimedia Commons (voir page) | CC BY-SA — à confirmer sur la page | libre (CC) | https://commons.wikimedia.org/wiki/File:Plage_Sainte-Claire_%C3%A0_Goyave.JPG |
 | pointe-a-bacchus-01 | pointe-a-bacchus | PNG | © PNG — tous droits réservés | autorisation requise | https://www.randoguadeloupe.gp/en/trek/16704-Pointe-a-Bacchus |
 | pointe-a-bacchus-02 | pointe-a-bacchus | PNG | © PNG — tous droits réservés | autorisation requise | https://www.randoguadeloupe.gp/en/trek/16704-Pointe-a-Bacchus |
 | pointe-a-bacchus-03 | pointe-a-bacchus | Emilie Savy / PNG | © Emilie Savy / PNG — tous droits réservés | autorisation requise | https://www.randoguadeloupe.gp/en/trek/16704-Pointe-a-Bacchus |

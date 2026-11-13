@@ -219,12 +219,26 @@
           "type": "media"
         }
       ],
-      "images": [],
+      "images": [
+        {
+          "url": "https://commons.wikimedia.org/wiki/Special:FilePath/%C3%8Elet_Blanc_%28suite%29.jpg?width=1600",
+          "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/%C3%8Elet_Blanc_%28suite%29.jpg?width=400",
+          "caption": "Banc de sable de l'îlet Blanc, bateaux au mouillage",
+          "credit": "Enrevseluj",
+          "license": "CC BY-SA 4.0",
+          "rights": "libre (CC)",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File:Îlet_Blanc_(suite).jpg",
+          "sourceName": "Wikimedia Commons",
+          "relevance": "contexte",
+          "note": "Pas de palétuviers visibles"
+        }
+      ],
       "blurb": "Étape classique des sorties bateau au départ de Sainte-Rose.",
       "paragraphs": [
         "L'îlet Blanc fait partie des arrêts des sorties en bateau dans le Grand Cul-de-Sac Marin, au départ du port de Sainte-Rose.",
         "L'approche se fait lentement, ce qui laisse le temps d'observer les oiseaux avant de rejoindre la barrière de corail."
-      ]
+      ],
+      "imagesTodo": "Photo du banc de sable, pas de vue des palétuviers"
     },
     {
       "slug": "ilet-a-fajou",
@@ -262,12 +276,26 @@
         }
       ],
       "internalNote": "Ajouter une source PNG officielle.",
-      "images": [],
+      "images": [
+        {
+          "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Approche.jpg?width=1600",
+          "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Approche.jpg?width=400",
+          "caption": "Héron en chasse à marée basse sur l'îlet à Fajou",
+          "credit": "Alain NEGRONI",
+          "license": "CC BY-SA 4.0",
+          "rights": "libre (CC)",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File:Approche.jpg",
+          "sourceName": "Wikimedia Commons",
+          "relevance": "contexte",
+          "note": "Rive à marée basse, pas la mangrove"
+        }
+      ],
       "blurb": "Le plus grand îlet du Grand Cul-de-Sac Marin, couvert de mangrove.",
       "paragraphs": [
         "Fajou est le plus grand îlet du Grand Cul-de-Sac Marin. Il est constitué de mangrove et fait partie intégrante de la réserve naturelle.",
         "Il sert de refuge à de nombreuses espèces protégées. On l'observe depuis le bateau."
-      ]
+      ],
+      "imagesTodo": "Photo du héron sur la rive, pas de vue de la mangrove"
     },
     {
       "slug": "lagon-vieux-bourg",
@@ -990,6 +1018,18 @@
       "internalNote": "Source datée (2021, offre indisponible). À reconfirmer.",
       "images": [
         {
+          "url": "https://commons.wikimedia.org/wiki/Special:FilePath/%C3%8Elet_Fortune.jpg?width=1600",
+          "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/%C3%8Elet_Fortune.jpg?width=400",
+          "caption": "Îlet Fortune, face à la côte de Goyave",
+          "credit": "Filo gèn'",
+          "license": "CC BY-SA 4.0",
+          "rights": "libre (CC)",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File:Îlet_Fortune.jpg",
+          "sourceName": "Wikimedia Commons",
+          "relevance": "contexte",
+          "note": "Îlet en face, pas l'embouchure de la rivière"
+        },
+        {
           "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Plage_Sainte-Claire_%C3%A0_Goyave.JPG?width=1600",
           "thumb": "https://commons.wikimedia.org/wiki/Special:FilePath/Plage_Sainte-Claire_%C3%A0_Goyave.JPG?width=400",
           "caption": "Plage Sainte-Claire, Goyave",
@@ -1006,7 +1046,7 @@
         "Depuis le port de pêche de Goyave, l'embouchure de la Rivière Moustique se rejoint en kayak en longeant la côte vers le nord.",
         "L'îlet Fortune et un banc de sable se trouvent à proximité."
       ],
-      "imagesTodo": "Photos de contexte uniquement, pas de vue de la mangrove"
+      "imagesTodo": "Vue de l'îlet Fortune, pas de l'embouchure"
     },
     {
       "slug": "pointe-a-bacchus",

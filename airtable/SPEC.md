@@ -155,7 +155,7 @@ Un avis client réel, avec sa source dans « Auteur » (« Sandra, avis Google �
 | Citation | Long text |  |  |
 | Auteur | Single line text |  |  |
 
-### 8. Photos · 49 rows · file `csv/08 Photos.csv`
+### 8. Photos · 52 rows · file `csv/08 Photos.csv`
 Une photo d'un lieu, avec son crédit et ses droits. Guides and operators: edit their own rows. First column: **Réf**.
 
 | Field | Type | Who edits | Help |
